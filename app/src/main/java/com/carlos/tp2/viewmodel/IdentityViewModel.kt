@@ -20,6 +20,11 @@ class IdentityViewModel(
     val user: LiveData<User>
         get() = _user
 
+
+    private val _test: MutableLiveData<String> = MutableLiveData()
+    val test: LiveData<String>
+        get() = _test
+
     init {
         initializeUser()
     }
@@ -29,9 +34,13 @@ class IdentityViewModel(
     }
 
     private fun initializeUser() {
-        uiScope.launch {
-            _user.value = getUserFromDatabase()
-            Log.i("IdentityViewModel", "User initialized! : ${user.value?.firstname}")
+        _test.value = "Avant launch"
+        //RunBlocking au lieu de uiScop.launch sinon le databinding ne marchait pas
+        runBlocking {
+            launch {
+                _user.value = getUserFromDatabase()
+                Log.i("IdentityViewModel", "User initialized! : ${user.value?.firstname}")
+            }
         }
     }
 
