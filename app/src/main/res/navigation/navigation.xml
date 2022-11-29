@@ -20,8 +20,8 @@
             android:label="PersonalDataFragment"
             tools:layout="@layout/fragment_personal_data" >
         <argument
-                android:name="user"
-                app:argType="com.carlos.tp2.data.User" />
+            android:name="userID"
+            app:argType="long" />
     </fragment>
 
 </navigation>

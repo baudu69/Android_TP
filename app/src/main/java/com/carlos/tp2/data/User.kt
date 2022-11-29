@@ -35,7 +35,6 @@ data class User(
             notifyPropertyChanged(BR.id)
         }
 
-
     var lastname: String?
         @Bindable get() = _lastname
         set(value) {
@@ -69,6 +68,7 @@ data class User(
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(id)
         parcel.writeString(lastname)
         parcel.writeString(firstname)
         parcel.writeLong(birthdayDate)
@@ -87,5 +87,9 @@ data class User(
         override fun newArray(size: Int): Array<User?> {
             return arrayOfNulls(size)
         }
+    }
+
+    override fun toString(): String {
+        return "$firstname $lastname"
     }
 }
