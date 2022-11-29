@@ -60,7 +60,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="date"
-                    android:text="@={LongConverter.dateToString(viewModel.user.birthdayDate)}" />
+                    android:text="@={LongConverter.longToString(viewModel.user.birthdayDate)}" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bt_validate"

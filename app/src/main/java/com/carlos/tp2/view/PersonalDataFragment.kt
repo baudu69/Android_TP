@@ -58,7 +58,7 @@ class PersonalDataFragment : Fragment() { //, PersonalDateEventListener {
 // }
     private fun validate(view: View) {
         val message = viewModel.user.gender + " " +
-                LongConverter.dateToString(viewModel.user.birthdayDate)
+                LongConverter.longToString(viewModel.user.birthdayDate)
         Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
     }
 }

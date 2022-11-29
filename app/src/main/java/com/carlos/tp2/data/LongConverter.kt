@@ -25,4 +25,26 @@ object LongConverter {
             null
         }
     }
+
+    @JvmStatic
+    @InverseMethod("stringToLong")
+    fun longToString(
+        value: Long?
+    ): String? = value?.let {
+        val date = Date(value)
+        val f = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+        f.format(date)
+    }
+
+    @JvmStatic
+    fun stringToLong(
+        value: String?
+    ): Long? {
+        return try {
+            val f = SimpleDateFormat("dd/MM/yy", Locale.getDefault())
+            f.parse(value).time
+        } catch (e: Exception) {
+            null
+        }
+    }
 }
