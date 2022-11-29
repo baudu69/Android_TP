@@ -44,7 +44,7 @@ class IdentityFragment : Fragment() {
         return binding.root
     }
     private fun validate(view: View) {
-        var t = 0
+        viewModel.onValidate()
 
         view.findNavController().navigate(IdentityFragmentDirections.actionIdentityFragmentToPersonalDataFragment(viewModel.user.value?:User()))
     }

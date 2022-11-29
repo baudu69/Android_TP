@@ -13,7 +13,10 @@ import androidx.navigation.fragment.navArgs
 import com.carlos.tp2.R
 import com.carlos.tp2.data.LongConverter
 import com.carlos.tp2.data.User
+import com.carlos.tp2.database.MyDatabase
 import com.carlos.tp2.databinding.FragmentPersonalDataBinding
+import com.carlos.tp2.viewmodel.IdentityViewModel
+import com.carlos.tp2.viewmodel.IdentityViewModelFactory
 import com.carlos.tp2.viewmodel.PersonalDataViewModel
 import com.carlos.tp2.viewmodel.PersonalDataViewModelFactory
 import java.text.SimpleDateFormat
@@ -27,8 +30,8 @@ interface PersonalDateEventListener {
 
 class PersonalDataFragment : Fragment() { //, PersonalDateEventListener {
     private lateinit var binding: FragmentPersonalDataBinding
-    private lateinit var viewModel: PersonalDataViewModel
-    private lateinit var viewModelFactory: PersonalDataViewModelFactory
+    private lateinit var viewModel: IdentityViewModel
+    private lateinit var viewModelFactory: IdentityViewModelFactory
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,9 +40,9 @@ class PersonalDataFragment : Fragment() { //, PersonalDateEventListener {
             R.layout.fragment_personal_data, container, false)
 // binding.eventListener = this
         val args = PersonalDataFragmentArgs.fromBundle(requireArguments())
-        viewModelFactory = PersonalDataViewModelFactory(args.user)
-        viewModel =
-            ViewModelProvider(this,viewModelFactory)[PersonalDataViewModel::class.java]
+        val context = requireNotNull(this.activity).applicationContext
+        viewModelFactory = IdentityViewModelFactory(MyDatabase.getInstance(context).userDao, requireActivity().application)
+        viewModel = ViewModelProvider(this, viewModelFactory)[IdentityViewModel::class.java]
         //viewModel = ViewModelProviders.of(this, viewModelFactory)
         // .get(PersonalDataViewModel::class.java)
         // depreciate
@@ -57,8 +60,8 @@ class PersonalDataFragment : Fragment() { //, PersonalDateEventListener {
 // viewModel.onGender(gender)
 // }
     private fun validate(view: View) {
-        val message = viewModel.user.gender + " " +
-                LongConverter.longToString(viewModel.user.birthdayDate)
+        val message = viewModel.user.value?.gender + " " +
+                LongConverter.longToString(viewModel.user.value?.birthdayDate)
         Toast.makeText(this.context, message, Toast.LENGTH_SHORT).show()
     }
 }

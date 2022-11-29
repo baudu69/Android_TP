@@ -5,14 +5,37 @@ import android.os.Parcelable
 import androidx.annotation.Keep
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.carlos.tp2.BR
 import java.util.*
 
 @Keep
-data class User(private var _lastname: String? = "", private var _firstname:
-String? = "", private var _birthdayDate: Long = 0, private var _gender: String? =
-                    "") : Parcelable,
+@Entity(tableName = "user")
+data class User(
+    @ColumnInfo(name = "lastname")
+    private var _lastname: String? = "",
+    @ColumnInfo(name = "firstname")
+    private var _firstname: String? = "",
+    @ColumnInfo(name = "birthday_date")
+    private var _birthdayDate: Long = 0,
+    @ColumnInfo(name = "gender")
+    private var _gender: String? = ""
+) : Parcelable,
     BaseObservable() {
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private var _id: Long = 0L
+    var id: Long
+        @Bindable get() = _id
+        set(value) {
+            _id = value
+            notifyPropertyChanged(BR.id)
+        }
+
+
     var lastname: String?
         @Bindable get() = _lastname
         set(value) {
